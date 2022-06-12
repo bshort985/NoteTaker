@@ -1,5 +1,7 @@
 const express = require('express');
 const notes = require("./db/db.json");
+const fs = require("fs");
+const path = require("path");
 
 // Initialize the app and create a port
 const app = express();
@@ -17,11 +19,26 @@ app.get("/api/notes", (req, res) => {
 });
 
 
+// POST Route
 app.post("/api/notes", (req, res) => {
-    console.log(req.body);
+   
+    const note = newNote(req.body, notes);
     res.json(req.body);
 });
 
+// function to store notes
+
+function newNote(body, notesArray){
+    console.log(body);
+    console.log(notesArray);
+    const note = body;
+    notesArray.push(note)
+    fs.writeFileSync(
+        path.join(__dirname, "./db/db.json"),
+        JSON.stringify({notes: notesArray}, null, 2)
+    );
+    return note;
+}
 
 
 
