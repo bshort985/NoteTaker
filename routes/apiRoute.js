@@ -12,7 +12,7 @@ router.get("/notes", (req, res) => {
 // POST Route
 
 router.post("/notes", (req, res) => {
-    const note = addNote(req.body, notes);
+    const note = addNote(req.body);
     res.json(note);
 });
 
